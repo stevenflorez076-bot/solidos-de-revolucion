@@ -1,1 +1,62 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sólidos de revolución | UTS</title><link rel="stylesheet" href="estilos.css"><script src="https://www.geogebra.org/apps/deployggb.js"></script></head><body><header><h1>Sólidos de revolución</h1><p>Cálculo Integral · UTS</p></header><main><nav id="menu" aria-label="Métodos de cálculo"></nav><h2 id="titulo"></h2><p id="resultado"></p><p>Mueve a para girar, p para cambiar la sección y n para variar la aproximación. Los valores vol, aprox y error aparecen en la vista algebraica.</p><p id="estado" role="status"></p><div id="visor"></div><p><a id="comandos">Ver comandos del ejercicio</a> · <a href="Informe.pdf">Ver informe PDF</a> · <a href="https://www.geogebra.org/classic">Abrir GeoGebra Clásico</a></p></main><footer>Andrés Daniel Goyeneche · Andrés David Goyeneche · Jhoan Steven Florez · Juan Esteban Montoya</footer><script src="ejercicios.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102735">
+  <title>Inicio | Sólidos de revolución</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script>
+  const pages = ['discos', 'arandelas', 'cascarones'];
+  function openLegacyLink() {
+    const slug = location.hash.slice(1);
+    if (pages.includes(slug)) location.replace(slug + '.html');
+  }
+  openLegacyLink();
+  addEventListener('hashchange', openLegacyLink);
+</script>
+<script defer src="diagramas.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="./">Sólidos de revolución</a>
+      <nav aria-label="Páginas del proyecto"><a href="./" aria-current=page>Inicio</a><a href="discos.html">Discos</a><a href="arandelas.html">Arandelas</a><a href="cascarones.html">Cascarones</a></nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="hero home-hero">
+  <div>
+    <p class="eyebrow">Proyecto de Cálculo Integral</p>
+    <h1>Sólidos de<br>revolución</h1>
+    <p>Una región plana gira alrededor de un eje y forma un cuerpo en 3D. Explora los tres métodos y sigue la integral hasta obtener el volumen.</p>
+    <a class="action" href="Informe.pdf">Abrir informe PDF <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="hero-plot"><canvas id="portada" role="img" aria-label="Región plana bajo la curva y igual a x al cuadrado"></canvas></div>
+</section>
+<div class="methods-grid"><a class="method-card discos" href="discos.html">
+  <span class="card-axis">Giro alrededor del eje X</span>
+  <h2>Discos</h2><p>Una curva que gira sobre el eje X forma una pieza maciza, con secciones circulares.</p>
+  <span class="card-result">20,11 u³ <span aria-hidden="true">↗</span></span>
+</a><a class="method-card arandelas" href="arandelas.html">
+  <span class="card-axis">Giro alrededor del eje X</span>
+  <h2>Arandelas</h2><p>Una franja que gira alrededor del eje X forma un conducto hueco de radio constante.</p>
+  <span class="card-result">28,27 u³ <span aria-hidden="true">↗</span></span>
+</a><a class="method-card cascarones" href="cascarones.html">
+  <span class="card-axis">Giro alrededor del eje Y</span>
+  <h2>Cascarones</h2><p>Una curva que gira alrededor del eje Y se puede medir sumando capas cilíndricas delgadas.</p>
+  <span class="card-result">10,05 u³ <span aria-hidden="true">↗</span></span>
+</a></div>
+<section class="paper explainer">
+  <h2>¿Qué hace la integral?</h2>
+  <p>Piensa en muchas rebanadas delgadas. Cada una tiene un pequeño volumen. La integral suma esas contribuciones cuando el espesor se hace cada vez menor. En estos ejercicios, <strong>dx</strong> representa ese espesor y los límites señalan dónde empieza y termina la suma.</p>
+  <p>Con <strong>discos</strong> sumamos círculos llenos. Con <strong>arandelas</strong> descontamos el hueco de cada círculo. Con <strong>cascarones</strong> sumamos capas cilíndricas alrededor del eje. El eje de giro determina cómo medir el radio de cada pieza.</p>
+</section>
+  </main>
+  <footer class="site-footer shell">
+    <p>Unidades Tecnológicas de Santander · Cálculo Integral</p>
+    <p>Andrés Daniel Goyeneche · Andrés David Goyeneche · Jhoan Steven Florez · Juan Esteban Montoya</p>
+    <a href="Informe.pdf">Informe PDF</a> · <a href="https://github.com/stevenflorez076-bot/solidos-de-revolucion">Repositorio</a>
+  </footer>
+</body>
+</html>

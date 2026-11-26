@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102735">
+  <title>Discos | Sólidos de revolución</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script defer src="diagramas.js"></script>
+  <script defer src="https://www.geogebra.org/apps/deployggb.js"></script>
+  <script defer src="ejercicios.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="./">Sólidos de revolución</a>
+      <nav aria-label="Páginas del proyecto"><a href="./">Inicio</a><a href="discos.html" aria-current=page>Discos</a><a href="arandelas.html">Arandelas</a><a href="cascarones.html">Cascarones</a></nav>
+    </div>
+  </header>
+  <main class="shell">
+    <article class="exercise discos" data-method="discos">
+  <section class="hero exercise-hero">
+    <div><p class="eyebrow">Giro alrededor del eje X</p><h1>Discos</h1><p>Una curva que gira sobre el eje X forma una pieza maciza, con secciones circulares.</p></div>
+    <div class="volume"><span>Volumen exacto</span><strong>32π/5</strong><span>≈ 20,11 u³</span></div>
+  </section>
+  <div class="visuals">
+    <section class="paper visual">
+      <h2>Región en 2D</h2>
+      <p id="region-desc">La región va desde y = 0 hasta y = x², entre x = 0,00 y x = 2,00.</p>
+      <canvas id="region" role="img" aria-label="Región plana sombreada y sección seleccionada" aria-describedby="region-desc"></canvas>
+      <p class="legend"><span class="swatch area"></span> Región que gira <span class="swatch slice"></span> Sección en x = p</p>
+    </section>
+    <section class="paper visual">
+      <h2>Sólido en 3D</h2>
+      <p>Arrastra para ver el sólido desde otro ángulo.</p>
+      <div id="visor" aria-label="Simulador 3D de GeoGebra"></div>
+      <p id="estado" role="status">Cargando GeoGebra…</p>
+    </section>
+  </div>
+  <section class="paper controls" aria-label="Controles del simulador">
+    <label for="giro">Giro <output id="giro-valor">360°</output></label>
+    <input id="giro" type="range" min="1" max="360" value="360" disabled>
+    <label for="seccion">Sección p <output id="seccion-valor">1,00</output></label>
+    <input id="seccion" type="range" min="0.01" max="1.99" step="0.01" value="1" disabled>
+    <label for="divisiones">Divisiones n <output id="divisiones-valor">10</output></label>
+    <input id="divisiones" type="range" min="1" max="100" step="1" value="10" disabled>
+    <p class="approx">Aproximación <strong id="aprox">19,94 u³</strong></p>
+  </section>
+  <section class="paper explainer">
+    <h2>Datos del ejercicio</h2>
+    <dl class="data"><div><dt>Función</dt><dd><strong>f(x) = x²</strong><p>Marca el borde superior de la región.</p></dd></div><div><dt>Radio</dt><dd><strong>r(x) = x²</strong><p>Es la distancia vertical entre la curva y el eje X, situado en y = 0.</p></dd></div><div><dt>Intervalo</dt><dd><strong>[0,00, 2,00]</strong><p>Dentro de este tramo de x se encuentra toda la región que gira.</p></dd></div></dl>
+  </section>
+  <section class="paper explainer">
+    <h2>Fórmula y desarrollo</h2>
+    <div class="formula main-formula">V = π ∫<sub>a</sub><sup>b</sup> r(x)² dx</div>
+    <p>Aquí <strong>a</strong> y <strong>b</strong> son los límites del intervalo. <strong>dx</strong> es el espesor de cada rebanada o capa. El control de giro muestra cómo se forma el sólido. El cálculo corresponde a la vuelta completa.</p>
+    <ol class="steps"><li><h3>Plantea la integral</h3><p>Cada rebanada perpendicular al eje X es un disco. Su área es π por el radio al cuadrado.</p><div class="formula">V = π ∫<sub>0</sub><sup>2</sup> (x²)² dx = π ∫<sub>0</sub><sup>2</sup> x⁴ dx</div></li><li><h3>Integra la potencia</h3><p>Al integrar x⁴, el exponente aumenta a 5 y el resultado se divide entre 5.</p><div class="formula">V = π [x⁵/5]<sub>0</sub><sup>2</sup></div></li><li><h3>Evalúa en los dos límites</h3><p>Sustituye primero x = 2,00 y luego x = 0,00. Resta el segundo resultado al primero.</p><div class="formula">V = π(2⁵/5 − 0⁵/5) = 32π/5 ≈ 20,11 u³</div></li></ol>
+  </section>
+  <section class="paper explainer">
+    <h2>¿De dónde sale la aproximación?</h2>
+    <p>Con <strong>n = 10</strong> se divide el intervalo en diez partes del mismo ancho, Δx = (b − a)/n. Se toma el valor del integrando en el centro de cada parte, se multiplica por Δx y se suman las diez contribuciones.</p>
+    <p>Δx = 0,20. Los puntos medios van de 0,10 a 1,90. En cada uno se calcula el área πx⁴. El resultado inicial es <strong>19,94 u³</strong>.</p>
+    <a href="comandos/discos.txt">Ver comandos de GeoGebra</a>
+  </section>
+</article>
+  </main>
+  <footer class="site-footer shell">
+    <p>Unidades Tecnológicas de Santander · Cálculo Integral</p>
+    <p>Andrés Daniel Goyeneche · Andrés David Goyeneche · Jhoan Steven Florez · Juan Esteban Montoya</p>
+    <a href="Informe.pdf">Informe PDF</a> · <a href="https://github.com/stevenflorez076-bot/solidos-de-revolucion">Repositorio</a>
+  </footer>
+</body>
+</html>

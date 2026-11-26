@@ -1,92 +1,84 @@
-const menu = document.getElementById('menu');
+const metodo = document.querySelector('[data-method]').dataset.method;
+const ejercicio = ejercicios.find(item => item.name.toLowerCase() === metodo);
 const visor = document.getElementById('visor');
 const estado = document.getElementById('estado');
-const formato = new Intl.NumberFormat('es-CO', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
-let version = 0;
-let seleccionado;
-let temporizador;
+const region = document.getElementById('region');
+const giro = document.getElementById('giro');
+const seccion = document.getElementById('seccion');
+const divisiones = document.getElementById('divisiones');
+const controles = [
+  { input: giro, objeto: 'a', convertir: valor => valor * Math.PI / 180, mostrar: valor => valor + '°' },
+  { input: seccion, objeto: 'p', convertir: Number, mostrar: valor => formato.format(valor) },
+  { input: divisiones, objeto: 'n', convertir: Number, mostrar: String },
+];
+const formato = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-for (const ejercicio of ejercicios) {
-  const enlace = document.createElement('a');
-  enlace.href = '#' + ejercicio.name.toLowerCase();
-  enlace.textContent = ejercicio.name;
-  menu.append(enlace);
+function actualizarRegion() {
+  dibujarRegion(region, metodo, seccion.valueAsNumber);
 }
+new ResizeObserver(actualizarRegion).observe(region);
 
-function mostrar() {
-  const ejercicio = ejercicios.find(({name}) =>
-    '#' + name.toLowerCase() === location.hash
-  ) ?? ejercicios[0];
-  if (ejercicio === seleccionado) return;
-  seleccionado = ejercicio;
-
-  const actual = ++version;
-  clearTimeout(temporizador);
-  for (const enlace of menu.children) {
-    if (enlace.textContent === ejercicio.name) enlace.setAttribute('aria-current', 'page');
-    else enlace.removeAttribute('aria-current');
-  }
-
-  document.getElementById('titulo').textContent = ejercicio.name;
-  document.getElementById('resultado').textContent =
-    'Volumen exacto: ' + ejercicio.exact + ' = ' + formato.format(ejercicio.value) + ' u³';
-  document.getElementById('comandos').href =
-    'comandos/' + ejercicio.name.toLowerCase() + '.txt';
-
-  const contenedor = document.createElement('div');
-  contenedor.id = 'ggb_' + actual;
-  visor.replaceChildren(contenedor);
-  estado.textContent = 'Cargando GeoGebra…';
-
+function iniciarSimulador() {
   function mostrarError() {
-    estado.textContent = 'GeoGebra no terminó de cargar. Puedes recargar la página o abrir los comandos del ejercicio.';
+    estado.textContent = 'GeoGebra no terminó de cargar. Puedes recargar la página o usar los comandos del ejercicio.';
   }
-
   if (typeof GGBApplet === 'undefined') {
     mostrarError();
     return;
   }
 
-  temporizador = setTimeout(mostrarError, 30000);
+  const alto = 340;
+  const temporizador = setTimeout(mostrarError, 30000);
   try {
     const app = new GGBApplet({
+      id: 'solido3d',
       appName: 'classic',
-      id: 'applet_' + actual,
-      width: Math.max(480, visor.clientWidth),
-      height: 560,
+      width: visor.clientWidth,
+      height: alto,
       language: 'en',
-      showToolBar: true,
-      showMenuBar: true,
-      showAlgebraInput: true,
+      showToolBar: false,
+      showMenuBar: false,
+      showAlgebraInput: false,
+      enableRightClick: false,
       appletOnLoad(api) {
-        if (actual !== version) return;
         clearTimeout(temporizador);
-        const fallos = [];
-        api.setPerspective(visor.clientWidth < 700 ? 'AT' : 'AGT');
-        for (const comando of ejercicio.commands) {
-          try {
-            if (!api.evalCommand(comando)) fallos.push(comando);
-          } catch {
-            fallos.push(comando);
+        try {
+          api.setPerspective('T');
+          for (const comando of ejercicio.commands) {
+            if (!api.evalCommand(comando)) throw new Error(comando);
           }
-        }
+          for (const nombre of ['h', 'aprox', 'region', 'f', 'g', 'a', 'p', 'n']) {
+            if (api.exists(nombre)) api.setVisible(nombre, false);
+          }
+          api.setColor('seccion', 188, 82, 28);
+          api.setFilling('seccion', 0.7);
 
-        api.setVisible('h', false);
-        api.setVisible('aprox', false);
-        estado.textContent = fallos.length
-          ? 'GeoGebra no pudo ejecutar: ' + fallos.join(' | ')
-          : 'Construcción cargada. Usa los deslizadores de GeoGebra.';
+          for (const { input, objeto, convertir, mostrar } of controles) {
+            const salida = document.getElementById(input.id + '-valor');
+            input.addEventListener('input', () => {
+              const valor = input.valueAsNumber;
+              api.setValue(objeto, convertir(valor));
+              salida.textContent = mostrar(valor);
+              if (objeto === 'p') actualizarRegion();
+              if (objeto === 'n') {
+                document.getElementById('aprox').textContent = formato.format(api.getValue('aprox')) + ' u³';
+              }
+            });
+            input.disabled = false;
+          }
+          new ResizeObserver(() => api.setSize(visor.clientWidth, alto)).observe(visor);
+          estado.textContent = 'Modelo 3D listo.';
+        } catch (error) {
+          console.error(error);
+          estado.textContent = 'No se pudo construir el modelo. Puedes consultar los comandos del ejercicio.';
+        }
       },
     }, true);
-    app.inject(contenedor.id);
+    app.inject('visor');
   } catch {
     clearTimeout(temporizador);
     mostrarError();
   }
 }
 
-window.addEventListener('hashchange', mostrar);
-mostrar();
+iniciarSimulador();
