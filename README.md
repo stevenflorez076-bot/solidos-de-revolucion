@@ -17,4 +17,4 @@ El [informe PDF](Informe.pdf) incluye los resultados de los tres ejercicios. Los
 
 ## GitHub Pages
 
-La fuente de publicación es la raíz de la rama `main`. En GitHub, se configura desde **Settings → Pages → Deploy from a branch → main → / (root)**.
+El [sitio publicado](https://stevenflorez076-bot.github.io/solidos-de-revolucion/) usa los archivos de la raíz de la rama `gh-pages`.
