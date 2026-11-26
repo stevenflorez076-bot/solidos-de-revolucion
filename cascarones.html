@@ -53,9 +53,10 @@
   </section>
   <section class="paper explainer">
     <h2>Fórmula y desarrollo</h2>
-    <div class="formula main-formula">V = 2π ∫<sub>a</sub><sup>b</sup> r(x)h(x) dx</div>
+    <div class="formula main-formula">V = 2π ∫<sub>a</sub><sup>b</sup> x[f(x) − g(x)] dx</div>
+    <p>El radio es <strong>x</strong>, la distancia al eje Y. La altura es la función superior <strong>f(x) = x²(2 − x)</strong> menos la inferior <strong>g(x) = 0</strong>.</p>
     <p>Aquí <strong>a</strong> y <strong>b</strong> son los límites del intervalo. <strong>dx</strong> es el espesor de cada rebanada o capa. El control de giro muestra cómo se forma el sólido. El cálculo corresponde a la vuelta completa.</p>
-    <ol class="steps"><li><h3>Arma cada capa</h3><p>Multiplica la circunferencia 2πx por la altura. El espesor de la capa es dx.</p><div class="formula">V = 2π ∫<sub>0</sub><sup>2</sup> x · x²(2 − x) dx</div></li><li><h3>Desarrolla e integra</h3><p>Primero multiplica los factores. Luego aplica la regla de la potencia a cada término.</p><div class="formula">V = 2π ∫<sub>0</sub><sup>2</sup> (2x³ − x⁴) dx = 2π [x⁴/2 − x⁵/5]<sub>0</sub><sup>2</sup></div></li><li><h3>Evalúa en los dos límites</h3><p>En x = 2,00 los términos dan 8,00 y 6,40. En x = 0,00 ambos dan 0,00.</p><div class="formula">V = 2π(8,00 − 6,40) = 16π/5 ≈ 10,05 u³</div></li></ol>
+    <ol class="steps"><li><h3>Arma cada capa</h3><p>Multiplica la circunferencia 2πx por la altura. El espesor de la capa es dx.</p><div class="formula">V = 2π ∫<sub>0</sub><sup>2</sup> x[x²(2 − x) − 0] dx</div></li><li><h3>Desarrolla e integra</h3><p>Primero multiplica los factores. Luego aplica la regla de la potencia a cada término.</p><div class="formula">V = 2π ∫<sub>0</sub><sup>2</sup> (2x³ − x⁴) dx = 2π [x⁴/2 − x⁵/5]<sub>0</sub><sup>2</sup></div></li><li><h3>Evalúa en los dos límites</h3><p>En x = 2,00 los términos dan 8,00 y 6,40. En x = 0,00 ambos dan 0,00.</p><div class="formula">V = 2π(8,00 − 6,40) = 16π/5 ≈ 10,05 u³</div></li></ol>
   </section>
   <section class="paper explainer">
     <h2>¿De dónde sale la aproximación?</h2>
